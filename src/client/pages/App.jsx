@@ -1,37 +1,16 @@
 import React, { Component } from 'react'
 import Web3 from 'web3'
-import DaiToken from '../abis/DaiToken.json'
-import DappToken from '../abis/DappToken.json'
-import TokenFarm from '../abis/TokenFarm.json'
-import Navbar from './Navbar'
-import Main from './Main'
-import './App.css'
+import { Redirect, BrowserRouter, Route, Switch } from 'react-router-dom';
 
-const path = require('path')
-const porta = 9000
-const url = "mongodb://localhost/exchange"
-const mongoose = require('mongoose')
+import DaiToken from '../../abis/DaiToken.json'
+import DappToken from '../../abis/DappToken.json'
+import TokenFarm from '../../abis/TokenFarm.json'
+import Navbar from '../components/Navbar'
 
-//require('../components/usuarios')
+import ExchangePage from './Exchange'
+import DashboardPage from './Dashboard'
+import StatsPage from './Stats'
 
-//const usuario = mongoose.model('usuario')
-
-/*mongoose.Promise = global.Promise
-mongoose.connect(url, {
-
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false
-
-}).then(function(){
-    console.log("MongoDb conectado")
-
-}).catch(function(err){
-
-    console.log("Erro: "+err )
-})
-*/
 class App extends Component {
 
   async componentWillMount() {
@@ -49,7 +28,7 @@ class App extends Component {
 
     // Load DaiToken
     const daiTokenData = DaiToken.networks[networkId]
-    if(daiTokenData) {
+    if (daiTokenData) {
       const daiToken = new web3.eth.Contract(DaiToken.abi, daiTokenData.address)
       this.setState({ daiToken })
       let daiTokenBalance = await daiToken.methods.balanceOf(this.state.account).call()
@@ -60,7 +39,7 @@ class App extends Component {
 
     // Load DappToken
     const dappTokenData = DappToken.networks[networkId]
-    if(dappTokenData) {
+    if (dappTokenData) {
       const dappToken = new web3.eth.Contract(DappToken.abi, dappTokenData.address)
       this.setState({ dappToken })
       let dappTokenBalance = await dappToken.methods.balanceOf(this.state.account).call()
@@ -71,7 +50,7 @@ class App extends Component {
 
     // Load TokenFarm
     const tokenFarmData = TokenFarm.networks[networkId]
-    if(tokenFarmData) {
+    if (tokenFarmData) {
       const tokenFarm = new web3.eth.Contract(TokenFarm.abi, tokenFarmData.address)
       this.setState({ tokenFarm })
       let stakingBalance = await tokenFarm.methods.stakingBalance(this.state.account).call()
@@ -95,6 +74,7 @@ class App extends Component {
       window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
     }
   }
+
 
   stakeTokens = (amount) => {
     this.setState({ loading: true })
@@ -122,75 +102,40 @@ class App extends Component {
       daiTokenBalance: '0',
       dappTokenBalance: '0',
       stakingBalance: '0',
-      loading: true
+      loading: true,
+      students: []
     }
   }
 
   render() {
-    let content
-    if(this.state.loading) {
-      content = <p id="loader" className="text-center">Procurando conectar com uma rede local ...</p>
-    } else {
-      content = <Main
-        daiTokenBalance={this.state.daiTokenBalance}
-        dappTokenBalance={this.state.dappTokenBalance}
-        stakingBalance={this.state.stakingBalance}
-        stakeTokens={this.stakeTokens}
-        unstakeTokens={this.unstakeTokens}
-      />
-    }
-
     return (
-      <div>
-        <Navbar account={this.state.account} />
-        <div className="container-fluid mt-5">
-          <div className="row">
-            <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '600px' }}>
-              <div className="content mr-auto ml-auto">
-                <table style={{width:'60vw', position:'absolute', top: '10vh', left:'-68.5vh'}}>
-                  <tr style={{border: '2px solid #000', color: '#343a40'}}>
-                    <th >Nome</th>
-                    <th>Numero de pauta</th>
-                    <th>Quantidade de dinheiro</th>
-                    <th>Património</th>
-                    <th>Nota do estudante</th>
-                    <th></th>
-                   </tr>
+      <BrowserRouter>
+        <div>
+          <Navbar account={this.state.account} />
+          <main className="container-fluid mt-5 p-5">
 
-                  <tr>
-                    <td>Creuma Kuzola</td>
-                    <td>12345</td>
-                    <td>1.000.000</td>
-                    <td>1.000.00</td>
-                    <td></td>
-                  </tr>
-
-                  <tr>
-                    <td>Creuma Kuzola</td>
-                    <td>12345</td>
-                    <td>1.000.000</td>
-                    <td>1.000.00</td>
-                    <td></td>
-                  </tr>
-
-                </table>
-                <a
-                  href="http://www.dappuniversity.com/bootcamp"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                </a>
-               
-
-                {content}
-                
-              </div>
-            </main>
-          </div>
+            <Switch>
+              <Route exact path="/" component={() => <Redirect to={"/dashboard"} />} />
+              <Route path="/dashboard" component={DashboardPage} />
+              <Route path="/stats" component={StatsPage} />
+              <Route path="/exchange" component={() =>
+                this.state.loading ?
+                  <p id="loader" className="text-center">Procurando conectar com uma rede local ...</p>
+                  :
+                  <ExchangePage
+                    daiTokenBalance={this.state.daiTokenBalance}
+                    dappTokenBalance={this.state.dappTokenBalance}
+                    stakingBalance={this.state.stakingBalance}
+                    stakeTokens={this.stakeTokens}
+                    unstakeTokens={this.unstakeTokens}
+                  />
+              } />
+              <Route path="*" component={<Redirect to={"/"} />} />
+            </Switch>
+          </main>
         </div>
-      </div>
+      </BrowserRouter>
     );
-
   }
 }
 
