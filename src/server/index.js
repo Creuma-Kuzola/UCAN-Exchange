@@ -43,10 +43,10 @@ app.get('/api/stats', (req, res) => {
 
 const studentRoute = '/api/students';
 app.use(studentRoute, router.get("/", getStudents));
-app.post(studentRoute, router.post("/", createStudent));
+app.use(studentRoute, router.post("/", createStudent));
 app.use(studentRoute, router.get("/:id", getStudentById));
-app.delete(studentRoute, router.delete("/:id", deleteStudent));
-app.put(studentRoute, router.put("/:id", updateStudent));
+app.use(studentRoute, router.delete("/:id", deleteStudent));
+app.use(studentRoute, router.put("/:id", updateStudent));
 
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`)

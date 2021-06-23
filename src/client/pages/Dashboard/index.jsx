@@ -4,12 +4,12 @@ import Paper from "@material-ui/core/Paper"
 import { useState } from 'react';
 import { useEffect } from 'react';
 
+import studentsData from "../../../data/students.data.json"
 import api from '../../services/api'
 import { StudentsTableColumns, StudentsTableOptions } from "./students-table.helpers"
-import studentsData from "./students.data.json"
 
 const Dashboard = () => {
-  const [students, setStudents] = useState(studentsData || [])
+  const [students, setStudents] = useState([])
 
   const fetchAllStudents = async () => {
     try {
@@ -30,7 +30,7 @@ const Dashboard = () => {
     <Paper elevation={3} className="p-4">
       <MUIDataTable
         title="Lista de Estudantes"
-        data={students}
+        data={studentsData || students}
         columns={StudentsTableColumns}
         options={StudentsTableOptions}
       />

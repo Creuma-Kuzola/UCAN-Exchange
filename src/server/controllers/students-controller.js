@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// const mockedStudents = require("../students.data.json");
+// const mockedStudents = require("../../data/students.data.json");
 
 exports.StudantModel = mongoose.model("Student", new Schema({
   id: { type: Number, required: true },

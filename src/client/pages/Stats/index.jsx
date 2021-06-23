@@ -11,7 +11,7 @@ const Stats = () => {
   });
 
   const fetchStats = async () => {
-    console.log("chamou")
+    console.log("Actualizou")
     try {
       const { data } = await api.get("/stats");
       setStats(data || {});
@@ -29,10 +29,6 @@ const Stats = () => {
     }, 300);
 
   }, [realTime]);
-
-
-
-
 
   return (
     <div className="container p-5" style={{ maxWidth: "700px" }}>
