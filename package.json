@@ -1,9 +1,11 @@
 {
-  "name": "defi-tutorial",
+  "name": "ucan-exchange",
   "version": "0.1.0",
-  "description": "DeFi Token Staking App",
-  "author": "gregory@dappuniversity.com",
+  "description": "UCAN Exchange App",
+  "author": "feucan@3",
   "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
     "axios": "^0.21.1",
     "babel-polyfill": "6.26.0",
     "babel-preset-env": "1.7.0",
@@ -18,13 +20,15 @@
     "dotenv-safe": "^8.2.0",
     "identicon.js": "^2.3.3",
     "mongoose": "^5.12.14",
+    "mui-datatables": "^3.7.7",
     "querystring": "^0.2.1",
     "react": "16.8.4",
     "react-bootstrap": "^1.6.1",
     "react-dom": "16.8.4",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "^1.1.5",
     "truffle": "^5.3.11",
-    "web3": "^1.2.11"
+    "web3": "1.2.9"
   },
   "scripts": {
     "start": "react-scripts start",
