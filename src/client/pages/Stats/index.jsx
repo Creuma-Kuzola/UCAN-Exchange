@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import api from '../../services/api'
 
 const Stats = () => {
-
+  const [realTime, setRealTime] = useState(new Date());
   const [stats, setStats] = useState({
     ucan1: { price: 53.32005 },
     ucan2: { price: 3.53323 },
@@ -24,10 +24,14 @@ const Stats = () => {
   useEffect(() => {
 
     setTimeout(() => {
-      fetchStats()
+      fetchStats();
+      setRealTime(new Date())
     }, 300);
 
-  }, []);
+  }, [realTime]);
+
+
+
 
 
   return (
