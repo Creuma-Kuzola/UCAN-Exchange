@@ -19,6 +19,5 @@ mongoose.connect(url, {
     console.log("MongoDb conectado")
 
 }).catch(function(err){
-
     console.log("Erro: "+err )
 })
