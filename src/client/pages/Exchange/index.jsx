@@ -6,7 +6,8 @@ const Exchange = ({
   stakingBalance,
   dappTokenBalance,
   daiTokenBalance,
-  unstakeTokens
+  unstakeTokens,
+  stakeTokens
 }) => {
 
   return (
@@ -34,7 +35,7 @@ const Exchange = ({
           let amount
           amount = this.input.value.toString()
           amount = window.web3.utils.toWei(amount, 'Ether')
-          this.props.stakeTokens(amount)
+          stakeTokens(amount)
         }}>
           <div>
             <label className="float-left"><b>Stake Tokens</b></label>
