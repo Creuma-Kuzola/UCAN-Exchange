@@ -8,6 +8,7 @@ const { Router } = require('express')
 const {
   getStudents,
   getStudentById,
+  createManyStudents,
   createStudent,
   deleteStudent,
   updateStudent,
@@ -44,6 +45,7 @@ app.get('/api/stats', (req, res) => {
 const studentRoute = '/api/students';
 app.use(studentRoute, router.get("/", getStudents));
 app.use(studentRoute, router.post("/", createStudent));
+app.use(studentRoute, router.post("/create-many", createManyStudents));
 app.use(studentRoute, router.get("/:id", getStudentById));
 app.use(studentRoute, router.delete("/:id", deleteStudent));
 app.use(studentRoute, router.put("/:id", updateStudent));

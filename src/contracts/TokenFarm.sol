@@ -58,6 +58,14 @@ contract TokenFarm {
         isStaking[msg.sender] = false;
     }
 
+    function updateValue() public payable
+    {
+      
+
+
+
+    }
+
     // Issuing Tokens
     function issueTokens() public {
         // Only owner can call this function
