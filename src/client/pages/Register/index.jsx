@@ -58,10 +58,7 @@ const Exchange = () => {
         Criar conta na UCAN Exchange
       </Typography>
 
-      <Box
-        className="my-5 form-group"
-        // onSubmit={handleSubmit}
-      >
+      <Box className="my-5 form-group">
         <Box className="form-row">
           <TextField
             required

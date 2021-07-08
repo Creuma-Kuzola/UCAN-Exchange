@@ -1,19 +1,19 @@
-import React from "react";
-import MUIDataTable from "mui-datatables";
+import { Box, Button, Typography } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
-import { useState, useEffect } from "react";
+import MUIDataTable from "mui-datatables";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
-// import studentsData from "../../../data/students.data.json"
 import api from "../../services/api";
 import {
   StudentsTableColumns,
   StudentsTableOptions,
 } from "./students-table.helpers";
-import { Box } from "@material-ui/core";
-import { Typography } from "@material-ui/core";
+// import studentsData from "../../../data/students.data.json"
 
 const Dashboard = () => {
+  const { push } = useHistory();
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(false);
   const [exchangeBalance, setExchangeBalance] = useState({
@@ -53,6 +53,16 @@ const Dashboard = () => {
 
   return (
     <Paper elevation={2} className="p-4">
+      <div className="d-flex justify-content-end">
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => push("/register")}
+          className="font-weight-bold"
+        >
+          Novo Estudante
+        </Button>
+      </div>
       <MUIDataTable
         title="Lista de Estudantes"
         data={students}
