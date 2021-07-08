@@ -75,10 +75,12 @@ const Navbar = (props) => {
                         >
                           Exchange
                         </Button>
+
+          <Typography className="font-weight-bold">{props.account}</Typography>
+
               */}
           </div>
 
-          <Typography className="font-weight-bold">{props.account}</Typography>
         </div>
       </AppBar>
     </div>
