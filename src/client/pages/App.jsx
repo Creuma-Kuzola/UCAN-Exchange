@@ -23,7 +23,7 @@ class App extends Component {
   async loadBlockchainData() {
     const web3 = window.web3;
 
-    const accounts = await web3.eth.getAccounts();
+    const accounts = web3.eth ? await web3.eth.getAccounts() : [""];
     this.setState({ account: accounts[0] });
 
     const networkId = await web3.eth.net.getId();
@@ -31,10 +31,7 @@ class App extends Component {
     // Load ucana
     const ucanaData = ucana.networks[networkId];
     if (ucanaData) {
-      const ucana = new web3.eth.Contract(
-        ucana.abi,
-        ucanaData.address
-      );
+      const ucana = new web3.eth.Contract(ucana.abi, ucanaData.address);
       this.setState({ ucana });
       let ucanaBalance = await ucana.methods
         .balanceOf(this.state.account)
@@ -47,10 +44,7 @@ class App extends Component {
     // Load ucane
     const ucaneData = ucane.networks[networkId];
     if (ucaneData) {
-      const ucane = new web3.eth.Contract(
-        ucane.abi,
-        ucaneData.address
-      );
+      const ucane = new web3.eth.Contract(ucane.abi, ucaneData.address);
       this.setState({ ucane });
       let ucaneBalance = await ucane.methods
         .balanceOf(this.state.account)

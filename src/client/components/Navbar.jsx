@@ -1,14 +1,29 @@
-import { AppBar, Button, IconButton, Typography } from '@material-ui/core';
-import React from 'react'
-import { useHistory, useLocation } from 'react-router-dom';
+import { AppBar, Button, IconButton, Typography } from "@material-ui/core";
+import React from "react";
+import { useHistory, useLocation } from "react-router-dom";
 
-import farmer from '../assets/farmer.png'
+import farmer from "../assets/farmer.png";
 
-const Navbar = props => {
+const Navbar = (props) => {
   const { push } = useHistory();
   const { pathname } = useLocation();
 
   const isCurretRoute = (route) => pathname === route;
+
+  if (pathname.toLocaleLowerCase().includes("/register"))
+    return (
+      <div>
+        <Button
+          disableElevation
+          variant="ghost"
+          color={isCurretRoute("/dashboard") ? "secondary" : "inherit"}
+          onClick={() => push("/dashboard")}
+          className="m-4 font-weight-bold"
+        >
+          Ir para Dashboard
+        </Button>
+      </div>
+    );
 
   return (
     <div className="flex-grow-1">
@@ -16,10 +31,16 @@ const Navbar = props => {
         <div className="px-4 d-flex flex-row align-items-center justify-between">
           <div className="d-flex flex-grow-1 flex-row align-items-center">
             <IconButton edge="start" color="inherit" aria-label="menu">
-              <img src={farmer} width="30" height="30" className="d-inline-block align-top" alt="" />
+              <img
+                src={farmer}
+                width="30"
+                height="30"
+                className="d-inline-block align-top"
+                alt=""
+              />
             </IconButton>
 
-            <Typography variant="h6" className="font-weight-bold" >
+            <Typography variant="h6" className="font-weight-bold">
               UCAN Exchange
             </Typography>
 
@@ -43,15 +64,18 @@ const Navbar = props => {
               Estatísticas
             </Button>
 
-            <Button
-              disableElevation
-              variant={isCurretRoute("/exchange") ? "contained" : "ghost"}
-              color={isCurretRoute("/exchange") ? "secondary" : "inherit"}
-              onClick={() => push("/exchange")}
-              className="font-weight-bold"
-            >
-              Exchange
-            </Button>
+            {/**
+               *
+               *  <Button
+                          disableElevation
+                          variant={isCurretRoute("/exchange") ? "contained" : "ghost"}
+                          color={isCurretRoute("/exchange") ? "secondary" : "inherit"}
+                          onClick={() => push("/exchange")}
+                          className="font-weight-bold"
+                        >
+                          Exchange
+                        </Button>
+              */}
           </div>
 
           <Typography className="font-weight-bold">{props.account}</Typography>
@@ -59,6 +83,6 @@ const Navbar = props => {
       </AppBar>
     </div>
   );
-}
+};
 
 export default Navbar;

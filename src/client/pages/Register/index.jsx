@@ -54,17 +54,18 @@ const Exchange = () => {
 
   return (
     <Box p={5} className="container" maxWidth="600px">
-      <Typography className="mt-5 text-center" variant="h2">
+      <Typography className="mt-5 text-center" variant="h4">
         Criar conta na UCAN Exchange
       </Typography>
 
-      <form
-        className="my-4 form-group"
-        onSubmit={handleSubmit}
-        autoComplete="off"
+      <Box
+        className="my-5 form-group"
+        // onSubmit={handleSubmit}
       >
         <Box className="form-row">
           <TextField
+            required
+            fullWidth
             id="idEstudante"
             label="ID de Estudante"
             variant="filled"
@@ -74,8 +75,10 @@ const Exchange = () => {
             }
           />
         </Box>
-        <Box className="form-row">
+        <Box className="my-3 form-row">
           <TextField
+            required
+            fullWidth
             id="nome"
             label="Nome do Estudante"
             variant="filled"
@@ -87,6 +90,8 @@ const Exchange = () => {
         </Box>
         <Box className="form-row">
           <TextField
+            required
+            fullWidth
             id="sobrenome"
             label="Sobrenome"
             variant="filled"
@@ -96,8 +101,10 @@ const Exchange = () => {
             }
           />
         </Box>
-        <Box className="form-row">
+        <Box className="my-3 form-row">
           <TextField
+            required
+            fullWidth
             id="idConta"
             label="ID da Conta"
             variant="filled"
@@ -107,8 +114,10 @@ const Exchange = () => {
             }
           />
         </Box>
-        <Box className="form-row">
+        <Box className="mb-5 form-row">
           <TextField
+            required
+            fullWidth
             id="privateKey"
             label="Private Key (Ganache)"
             variant="filled"
@@ -118,10 +127,15 @@ const Exchange = () => {
             }
           />
         </Box>
-        <Button color="secondary" type="submit" variant="container" fullWidth>
-          {submting ? <CircularProgress /> : "Submeter Dados"}
+        <Button
+          fullWidth
+          color="secondary"
+          variant="contained"
+          onClick={handleSubmit}
+        >
+          {submting ? <CircularProgress size="small" /> : "Submeter Dados"}
         </Button>
-      </form>
+      </Box>
     </Box>
   );
 };

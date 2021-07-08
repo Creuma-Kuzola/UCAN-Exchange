@@ -30,7 +30,7 @@ const Dashboard = () => {
       setStudents(data || []);
     } catch (error) {
       toast.error(
-        `Ocorreu um erro ao carregar lista de estudantes!: ${error.message}`
+        `Ocorreu um erro ao carregar lista de estudantes: ${error.message}`
       );
     } finally {
       setLoading(false);
@@ -48,7 +48,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchAllStudents();
-    //  getExchangeBalance()
+    getExchangeBalance();
   }, []);
 
   return (
@@ -62,28 +62,28 @@ const Dashboard = () => {
 
       <Paper elevation={3} className="p-4">
         <Box mt={4} mb={3} textAlign="center">
-          <Typography variant="h3" color="primary">
+          <Typography variant="h5" color="primary">
             TOTAIS DE CADA MOEDA
           </Typography>
         </Box>
 
         <Box display="flex">
-          <Typography variant="h4">TOTAL DE UCANA:</Typography>
-          <Typography variant="h4" color="secondary">
+          <Typography variant="h6">TOTAL DE UCANA: </Typography>
+          <Typography className="ml-2" variant="h6" color="secondary">
             {`  ${exchangeBalance.ucana || 0.0}`}
           </Typography>
         </Box>
 
         <Box my={3} display="flex">
-          <Typography variant="h4">TOTAL DE UCANE:</Typography>
-          <Typography variant="h4" color="secondary">
+          <Typography variant="h6">TOTAL DE UCANE: </Typography>
+          <Typography className="ml-2" variant="h6" color="secondary">
             {`  ${exchangeBalance.ucane || 0.0}`}
           </Typography>
         </Box>
 
         <Box display="flex">
-          <Typography variant="h4">TOTAL DE UCANU:</Typography>
-          <Typography variant="h4" color="secondary">
+          <Typography variant="h6">TOTAL DE UCANU: </Typography>
+          <Typography className="ml-2" variant="h6" color="secondary">
             {`  ${exchangeBalance.ucanu || 0.0}`}
           </Typography>
         </Box>
