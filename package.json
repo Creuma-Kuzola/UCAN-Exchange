@@ -37,6 +37,7 @@
     "react-dom": "16.8.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^1.1.5",
+    "react-toastify": "^7.0.4",
     "truffle": "^5.3.11",
     "web3": "1.2.9"
   },

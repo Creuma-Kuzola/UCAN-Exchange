@@ -53,9 +53,9 @@ const CustomBody = ({ children }) => <p style={{ fontSize: 16 }}>{children}</p>;
 
 export const StudentsTableColumns = [
   {
-    name: "id",
+    name: "idEstudante",
     options: {
-      customHeadLabelRender: () => <CustomLabel>ID</CustomLabel>,
+      customHeadLabelRender: () => <CustomLabel>ID de Estudante</CustomLabel>,
       customBodyRender: value => <CustomBody>{value}</CustomBody>,
     },
   },
@@ -67,21 +67,28 @@ export const StudentsTableColumns = [
     },
   },
   {
-    name: "token1",
+    name: "sobrenome",
     options: {
-      customHeadLabelRender: () => <CustomLabel>UCAN1</CustomLabel>,
+      customHeadLabelRender: () => <CustomLabel>Sobrenome</CustomLabel>,
+      customBodyRender: value => <CustomBody>{value}</CustomBody>,
+    },
+  },
+  {
+    name: "ucana",
+    options: {
+      customHeadLabelRender: () => <CustomLabel>Total de UCANA</CustomLabel>,
       customBodyRender: value => <CustomBody>{value}</CustomBody>,
     },
   }, {
-    name: "token2",
+    name: "ucane",
     options: {
-      customHeadLabelRender: () => <CustomLabel>UCAN2</CustomLabel>,
+      customHeadLabelRender: () => <CustomLabel>Total de UCANE</CustomLabel>,
       customBodyRender: value => <CustomBody>{value}</CustomBody>,
     },
   }, {
-    name: "token3",
+    name: "ucanu",
     options: {
-      customHeadLabelRender: () => <CustomLabel>UCAN3</CustomLabel>,
+      customHeadLabelRender: () => <CustomLabel>Total de UCANU</CustomLabel>,
       customBodyRender: value => <CustomBody>{value}</CustomBody>,
     },
   },

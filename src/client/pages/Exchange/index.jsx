@@ -4,8 +4,8 @@ import dai from '../../assets/dai.png'
 
 const Exchange = ({
   stakingBalance,
-  dappTokenBalance,
-  daiTokenBalance,
+  ucaneBalance,
+  ucanaBalance,
   unstakeTokens,
   stakeTokens
 }) => {
@@ -23,7 +23,7 @@ const Exchange = ({
         <tbody>
           <tr>
             <td>{window.web3.utils.fromWei(stakingBalance, 'Ether')} mDAI</td>
-            <td>{window.web3.utils.fromWei(dappTokenBalance, 'Ether')} DAPP</td>
+            <td>{window.web3.utils.fromWei(ucaneBalance)} UCANE</td>
           </tr>
         </tbody>
       </table>
@@ -40,7 +40,7 @@ const Exchange = ({
           <div>
             <label className="float-left"><b>Stake Tokens</b></label>
             <span className="float-right text-muted">
-              Balance: {window.web3.utils.fromWei(daiTokenBalance, 'Ether')}
+              Balance: {window.web3.utils.fromWei(ucanaBalance, 'Ether')}
             </span>
           </div>
           <div className="input-group mb-4">

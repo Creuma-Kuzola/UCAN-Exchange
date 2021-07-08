@@ -1,110 +1,135 @@
-import React, { Component } from 'react'
-import Web3 from 'web3'
-import { Redirect, BrowserRouter, Route, Switch } from 'react-router-dom';
+import React, { Component } from "react";
+import Web3 from "web3";
+import { Redirect, BrowserRouter, Route, Switch } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-import DaiToken from '../../abis/DaiToken.json'
-import DappToken from '../../abis/DappToken.json'
-import TokenFarm from '../../abis/TokenFarm.json'
-import Navbar from '../components/Navbar'
+import ucana from "../../abis/ucana.json";
+import ucane from "../../abis/ucane.json";
+import TokenFarm from "../../abis/TokenFarm.json";
+import Navbar from "../components/Navbar";
 
-import ExchangePage from './Exchange'
-import DashboardPage from './Dashboard'
-import StatsPage from './Stats'
+import ExchangePage from "./Exchange";
+import DashboardPage from "./Dashboard";
+import RegisterPage from "./Register";
+import StatsPage from "./Stats";
 
 class App extends Component {
-
   async componentWillMount() {
-    await this.loadWeb3()
-    await this.loadBlockchainData()
+    await this.loadWeb3();
+    await this.loadBlockchainData();
   }
 
   async loadBlockchainData() {
-    const web3 = window.web3
+    const web3 = window.web3;
 
-    const accounts = await web3.eth.getAccounts()
-    this.setState({ account: accounts[0] })
+    const accounts = await web3.eth.getAccounts();
+    this.setState({ account: accounts[0] });
 
-    const networkId = await web3.eth.net.getId()
+    const networkId = await web3.eth.net.getId();
 
-    // Load DaiToken
-    const daiTokenData = DaiToken.networks[networkId]
-    if (daiTokenData) {
-      const daiToken = new web3.eth.Contract(DaiToken.abi, daiTokenData.address)
-      this.setState({ daiToken })
-      let daiTokenBalance = await daiToken.methods.balanceOf(this.state.account).call()
-      this.setState({ daiTokenBalance: daiTokenBalance.toString() })
+    // Load ucana
+    const ucanaData = ucana.networks[networkId];
+    if (ucanaData) {
+      const ucana = new web3.eth.Contract(
+        ucana.abi,
+        ucanaData.address
+      );
+      this.setState({ ucana });
+      let ucanaBalance = await ucana.methods
+        .balanceOf(this.state.account)
+        .call();
+      this.setState({ ucanaBalance: ucanaBalance.toString() });
     } else {
-      window.alert('DaiToken contract not deployed to detected network.')
+      window.alert("ucana contract not deployed to detected network.");
     }
 
-    // Load DappToken
-    const dappTokenData = DappToken.networks[networkId]
-    if (dappTokenData) {
-      const dappToken = new web3.eth.Contract(DappToken.abi, dappTokenData.address)
-      this.setState({ dappToken })
-      let dappTokenBalance = await dappToken.methods.balanceOf(this.state.account).call()
-      this.setState({ dappTokenBalance: dappTokenBalance.toString() })
+    // Load ucane
+    const ucaneData = ucane.networks[networkId];
+    if (ucaneData) {
+      const ucane = new web3.eth.Contract(
+        ucane.abi,
+        ucaneData.address
+      );
+      this.setState({ ucane });
+      let ucaneBalance = await ucane.methods
+        .balanceOf(this.state.account)
+        .call();
+      this.setState({ ucaneBalance: ucaneBalance.toString() });
     } else {
-      window.alert('DappToken contract not deployed to detected network.')
+      window.alert("ucane contract not deployed to detected network.");
     }
 
     // Load TokenFarm
-    const tokenFarmData = TokenFarm.networks[networkId]
+    const tokenFarmData = TokenFarm.networks[networkId];
     if (tokenFarmData) {
-      const tokenFarm = new web3.eth.Contract(TokenFarm.abi, tokenFarmData.address)
-      this.setState({ tokenFarm })
-      let stakingBalance = await tokenFarm.methods.stakingBalance(this.state.account).call()
-      this.setState({ stakingBalance: stakingBalance.toString() })
+      const tokenFarm = new web3.eth.Contract(
+        TokenFarm.abi,
+        tokenFarmData.address
+      );
+      this.setState({ tokenFarm });
+      let stakingBalance = await tokenFarm.methods
+        .stakingBalance(this.state.account)
+        .call();
+      this.setState({ stakingBalance: stakingBalance.toString() });
     } else {
-      window.alert('TokenFarm contract not deployed to detected network.')
+      window.alert("TokenFarm contract not deployed to detected network.");
     }
 
-    this.setState({ loading: false })
+    this.setState({ loading: false });
   }
 
   async loadWeb3() {
     if (window.ethereum) {
-      window.web3 = new Web3(window.ethereum)
-      await window.ethereum.enable()
-    }
-    else if (window.web3) {
-      window.web3 = new Web3(window.web3.currentProvider)
-    }
-    else {
-      window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
+      window.web3 = new Web3(window.ethereum);
+      await window.ethereum.enable();
+    } else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider);
+    } else {
+      window.alert(
+        "Non-Ethereum browser detected. You should consider trying MetaMask!"
+      );
     }
   }
-
 
   stakeTokens = (amount) => {
-    this.setState({ loading: true })
-    this.state.daiToken.methods.approve(this.state.tokenFarm._address, amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
-      this.state.tokenFarm.methods.stakeTokens(amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
-        this.setState({ loading: false })
-      })
-    })
-  }
+    this.setState({ loading: true });
+    this.state.ucana.methods
+      .approve(this.state.tokenFarm._address, amount)
+      .send({ from: this.state.account })
+      .on("transactionHash", (hash) => {
+        this.state.tokenFarm.methods
+          .stakeTokens(amount)
+          .send({ from: this.state.account })
+          .on("transactionHash", (hash) => {
+            this.setState({ loading: false });
+          });
+      });
+  };
 
   unstakeTokens = (amount) => {
-    this.setState({ loading: true })
-    this.state.tokenFarm.methods.unstakeTokens().send({ from: this.state.account }).on('transactionHash', (hash) => {
-      this.setState({ loading: false })
-    })
-  }
+    this.setState({ loading: true });
+    this.state.tokenFarm.methods
+      .unstakeTokens()
+      .send({ from: this.state.account })
+      .on("transactionHash", (hash) => {
+        this.setState({ loading: false });
+      });
+  };
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      account: '0x0',
-      daiToken: {},
-      dappToken: {},
+      account: "0x0",
+      ucana: {},
+      ucane: {},
       tokenFarm: {},
-      daiTokenBalance: '0',
-      dappTokenBalance: '0',
-      stakingBalance: '0',
+      ucanaBalance: "0",
+      ucaneBalance: "0",
+      stakingBalance: "0",
       loading: true,
-      students: []
-    }
+      students: [],
+    };
   }
 
   render() {
@@ -113,25 +138,40 @@ class App extends Component {
         <div>
           <Navbar account={this.state.account} />
           <main className="container-fluid mt-5 p-5">
-
             <Switch>
-              <Route exact path="/" component={() => <Redirect to={"/dashboard"} />} />
+              <Route
+                exact
+                path="/"
+                component={() => <Redirect to={"/register"} />}
+              />
+              <Route path="/register" component={RegisterPage} />
               <Route path="/dashboard" component={DashboardPage} />
               <Route path="/stats" component={StatsPage} />
-              <Route path="/exchange" component={() =>
-                this.state.loading ?
-                  <p id="loader" className="text-center">Procurando conectar com uma rede local ...</p>
-                  :
-                  <ExchangePage
-                    daiTokenBalance={this.state.daiTokenBalance}
-                    dappTokenBalance={this.state.dappTokenBalance}
-                    stakingBalance={this.state.stakingBalance}
-                    stakeTokens={this.stakeTokens}
-                    unstakeTokens={this.unstakeTokens}
-                  />
-              } />
+              <Route
+                path="/exchange"
+                component={() =>
+                  this.state.loading ? (
+                    <p id="loader" className="text-center">
+                      Procurando conectar com uma rede local ...
+                    </p>
+                  ) : (
+                    <ExchangePage
+                      ucanaBalance={this.state.ucanaBalance}
+                      ucaneBalance={this.state.ucaneBalance}
+                      stakingBalance={this.state.stakingBalance}
+                      stakeTokens={this.stakeTokens}
+                      unstakeTokens={this.unstakeTokens}
+                    />
+                  )
+                }
+              />
               <Route path="*" component={<Redirect to={"/"} />} />
             </Switch>
+            <ToastContainer
+              position="top-center"
+              autoClose={5000}
+              hideProgressBar
+            />
           </main>
         </div>
       </BrowserRouter>
